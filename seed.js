@@ -1,6 +1,6 @@
 var statusENUMS = {
     ACTIVE: "ACTIVE",
-    COMPLETE: "COMPLETE",
+    COMPLETE: "COMPLETED",
     DELETED: "DELETED"
 };
 
