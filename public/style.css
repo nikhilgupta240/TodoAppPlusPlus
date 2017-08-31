@@ -1,9 +1,19 @@
 .heading {
     text-align: center;
     background-color: #ffff99;
-
 }
 
+.breathTop{
+    margin-top: 50px;
+}
+
+.borderBottom{
+    border-style: solid;
+    border-bottom-color: #000000;
+    border-left-color: #ffffff;
+    border-top-color: #ffffff;
+    border-right-color: #ffffff;
+}
 .breathHorizontal{
     margin-left: 5px;
     margin-right: 5px;
@@ -18,7 +28,7 @@ div.todoStatusACTIVE{
     color: #0000ff;
 }
 
-div.todoStatusCOMPLETE{
+div.todoStatusCOMPLETED{
     color: #008000;
     text-decoration: line-through;
 }

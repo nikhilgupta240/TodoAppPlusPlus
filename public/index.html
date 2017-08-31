@@ -4,45 +4,70 @@
     <title>
         Todo App
     </title>
-    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
 
     <!-- Bootstrap -->
-    <link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/style.css">
 
 
 </head>
 <body>
-<div class="container">
-<div class="container heading">
-    <h1>My Todos</h1>
-</div>
-<h4>Active Todos</h4>
-<div id="active_todo_list_div">
+<div class="container-fluid">
+    <div class="container-fluid heading ">
+        <h1>My Todos</h1>
+    </div>
 
-</div>
-<div id="add_todo_div">
-    <h3>Add Todo</h3>
-    <input id="new_todo_input" type="text" placeholder="Todo Title Goes Here">
-    <input type="button" value="ADD" onclick="addTodoAJAX()">
-</div>
-<h4>Completed Todos</h4>
-<div id="completed_todo_list_div">
+    <!-------------------------------ACTIVE TODO'S --------------------------->
+    <div class="container-fluid breathTop borderBottom">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <div>
+                <p><b>Active Todos</b></p>
+            </div>
+            <div id="active_todo_list_div"></div>
+        </div>
+    </div>
 
-</div>
-<h4>Deleted Todos</h4>
-<div id="deleted_todo_list_div">
+    <!------------------------------ ADD TODO'S --------------------------->
+    <div class="container-fluid borderBottom">
+        <div class="col-xs-2"></div>
+        <div id="add_todo_div" class="col-xs-8">
+            <h3>Add Todo</h3>
+            <div class="col-xs-6">
+                <input id="new_todo_input" type="text" placeholder="Todo Title Goes Here" class="form-control">
+            </div>
+            <input type="button" value="ADD" class="btn btn-info" onclick="addTodoAJAX()">
+        </div>
+    </div>
 
-</div>
+    <!------------------------------ COMPLETED TODO'S --------------------------->
+    <div class="container-fluid borderBottom">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <p><b>Completed Todos</b></p>
+            <div id="completed_todo_list_div"></div>
+        </div>
+    </div>
+    <!------------------------------ DELETED TODO'S --------------------------->
+    <div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <p><b>Deleted Todos</b></p>
+            <div id="deleted_todo_list_div">
+
+            </div>
+        </div>
+    </div>
 </div>
 <!----------------------- JAVASCRIPT FILES --------------------------------->
 <script type="text/javascript" src="/script.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

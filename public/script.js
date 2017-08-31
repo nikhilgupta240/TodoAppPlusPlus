@@ -45,9 +45,8 @@ function addTodoElements(todos_data_json) {
 function createActiveTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
-    todo_element.appendChild(createCheckbox(todo_id));
-    var todo_title = document.createTextNode(todo.title);
-    todo_element.appendChild(todo_title);
+    todo_element.appendChild(createCheckbox(todo_id, todo));
+    todo_element.appendChild(createTitleElement(todo));
     todo_element.appendChild(createDeleteX(todo_id));
     return todo_element;
 }
@@ -55,34 +54,44 @@ function createActiveTodoElement(todo_id, todo) {
 function createCompletedTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
-    var checkbox = document.createElement("input");
-    checkbox.setAttribute("type", "checkbox");
-    checkbox.checked = true;
-    checkbox.setAttribute("onchange", "setTodoActiveAJAX(" + todo_id + ")");
-    todo_element.appendChild(checkbox);
-    var todo_title = document.createTextNode(todo.title);
-    todo_element.appendChild(todo_title);
+    todo_element.appendChild(createCheckbox(todo_id, todo));
+    todo_element.appendChild(createTitleElement(todo));
     todo_element.appendChild(createDeleteX(todo_id));
     return todo_element;
 }
 
 function createDeletedTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
-    todo_element.innerText = todo.title;
+    todo_element.setAttribute("data-id", todo_id);
+    todo_element.appendChild(createTitleElement(todo));
     return todo_element;
 }
 
-function createCheckbox(todo_id) {
+function createCheckbox(todo_id, todo) {
+    var checkbox_div = document.createElement("div");
+    checkbox_div.setAttribute("class", "col-xs-2");
     var checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("onchange", "setTodoCompletedAJAX(" + todo_id + ")");
-    return checkbox;
+    if(todo.status === TODO_STATUS_COMPLETED){
+        checkbox.checked = true;
+        checkbox.setAttribute("onchange", "setTodoActiveAJAX(" + todo_id + ")");
+    }
+    checkbox_div.appendChild(checkbox);
+    return checkbox_div;
+}
+
+function createTitleElement(todo){
+    var todo_text = document.createElement("div");
+    todo_text.setAttribute("class", "col-xs-8 todoStatus" + todo.status);
+    todo_text.innerText = todo.title;
+    return todo_text;
 }
 
 function createDeleteX(todo_id) {
-    var delete_x = document.createElement("span");
+    var delete_x = document.createElement("div");
     delete_x.innerText = "X";
-    delete_x.setAttribute("class", "text-danger");
+    delete_x.setAttribute("class", "text-danger col-xs-2");
     delete_x.setAttribute("onclick", "setTodoDeletedAJAX(" + todo_id + ")");
     return delete_x;
 }
