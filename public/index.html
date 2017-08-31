@@ -49,15 +49,22 @@
             <p><b>Completed Todos</b></p>
             <div id="completed_todo_list_div"></div>
         </div>
+        <div class="col-xs-2">
+            <button class="btn btn-link btn-xs" onclick="hideCompletedItems()">Hide Completed Items</button>
+        </div>
     </div>
     <!------------------------------ DELETED TODO'S --------------------------->
     <div>
         <div class="col-xs-2"></div>
         <div class="col-xs-8">
             <p><b>Deleted Todos</b></p>
-            <div id="deleted_todo_list_div">
+            <div class="col-xs-2"></div>
+            <div id="deleted_todo_list_div" class="col-xs-10">
 
             </div>
+        </div>
+        <div class="col-xs-2">
+            <button class="btn btn-link btn-xs" onclick="hideDeletedItems()">Hide Deleted Items</button>
         </div>
     </div>
 </div>

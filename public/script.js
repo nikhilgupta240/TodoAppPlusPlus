@@ -70,10 +70,11 @@ function createDeletedTodoElement(todo_id, todo) {
 function createCheckbox(todo_id, todo) {
     var checkbox_div = document.createElement("div");
     checkbox_div.setAttribute("class", "col-xs-2");
+    checkbox_div.setAttribute("align", "right");
     var checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("onchange", "setTodoCompletedAJAX(" + todo_id + ")");
-    if(todo.status === TODO_STATUS_COMPLETED){
+    if (todo.status === TODO_STATUS_COMPLETED) {
         checkbox.checked = true;
         checkbox.setAttribute("onchange", "setTodoActiveAJAX(" + todo_id + ")");
     }
@@ -81,7 +82,7 @@ function createCheckbox(todo_id, todo) {
     return checkbox_div;
 }
 
-function createTitleElement(todo){
+function createTitleElement(todo) {
     var todo_text = document.createElement("div");
     todo_text.setAttribute("class", "col-xs-8 todoStatus" + todo.status);
     todo_text.innerText = todo.title;
@@ -89,11 +90,32 @@ function createTitleElement(todo){
 }
 
 function createDeleteX(todo_id) {
-    var delete_x = document.createElement("div");
+    var delete_x_div = document.createElement("div");
+    delete_x_div.setAttribute("class", "text-danger col-xs-2");
+    var delete_x = document.createElement("button");
+    delete_x.setAttribute("class", "btn btn-link");
     delete_x.innerText = "X";
-    delete_x.setAttribute("class", "text-danger col-xs-2");
     delete_x.setAttribute("onclick", "setTodoDeletedAJAX(" + todo_id + ")");
-    return delete_x;
+    delete_x_div.appendChild(delete_x);
+    return delete_x_div;
+}
+
+function hideCompletedItems() {
+    var complete_parent = document.getElementById(COMPLETED_TODO_LIST_ID);
+    if (complete_parent.style.display === 'none') {
+        complete_parent.style.display = 'block';
+    } else {
+        complete_parent.style.display = 'none';
+    }
+}
+
+function hideDeletedItems() {
+    var parent = document.getElementById(DELETED_TODO_LIST_ID);
+    if (parent.style.display === 'none') {
+        parent.style.display = 'block';
+    } else {
+        parent.style.display = 'none';
+    }
 }
 
 //-----------------------------------------------------------------------------//

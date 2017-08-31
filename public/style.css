@@ -3,37 +3,35 @@
     background-color: #ffff99;
 }
 
-.breathTop{
+.breathTop {
     margin-top: 50px;
 }
 
-.borderBottom{
-    border-style: solid;
+.borderBottom {
+    border: solid #ffffff;
     border-bottom-color: #000000;
-    border-left-color: #ffffff;
-    border-top-color: #ffffff;
-    border-right-color: #ffffff;
 }
-.breathHorizontal{
+
+.breathHorizontal {
     margin-left: 5px;
     margin-right: 5px;
 }
 
-.breathVertical{
+.breathVertical {
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-div.todoStatusACTIVE{
+div.todoStatusACTIVE {
     color: #0000ff;
 }
 
-div.todoStatusCOMPLETED{
+div.todoStatusCOMPLETED {
     color: #008000;
     text-decoration: line-through;
 }
 
-div.todoStatusDELETED{
+div.todoStatusDELETED {
     color: #ff0000;
     text-decoration: line-through;
 }
