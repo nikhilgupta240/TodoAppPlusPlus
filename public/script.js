@@ -18,7 +18,12 @@ function addTodoElements(todos_data_json) {
     var active_todo_parent = document.getElementById(ACTIVE_TODO_LIST_ID);
     var completed_todo_parent = document.getElementById(COMPLETED_TODO_LIST_ID);
     var deleted_todo_parent = document.getElementById(DELETED_TODO_LIST_ID);
-
+    while(active_todo_parent.hasChildNodes()){
+        active_todo_parent.removeChild(active_todo_parent.lastChild);
+    }
+    while(completed_todo_parent.hasChildNodes()){
+        completed_todo_parent.removeChild(completed_todo_parent.lastChild);
+    }
     for (todo_id in todos) {
         if (todos[todo_id].status === TODO_STATUS_ACTIVE) {
             active_todo_parent.appendChild(createActiveTodoElement(todo_id, todos[todo_id]));
@@ -85,7 +90,7 @@ function addTodoAJAX() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === RESPONSE_DONE) {
             if (xhr.status === STATUS_OK) {
-                addTodoElements(TODO_LIST_ID, xhr.responseText);
+                addTodoElements(xhr.responseText);
             } else {
                 var resp = JSON.parse(xhr.responseText);
                 alert(resp.error);
@@ -97,9 +102,49 @@ function addTodoAJAX() {
 }
 
 function setTodoActiveAJAX(todo_id){
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/api/todos/" + todo_id);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === RESPONSE_DONE){
+            if(xhr.status === STATUS_OK){
+                addTodoElements(xhr.responseText);
+            }
+        }
+    };
+    var data = "todo_status="+encodeURI(TODO_STATUS_ACTIVE);
 
+    xhr.send(data);
 }
 
 function setTodoCompletedAJAX(todo_id){
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/api/todos/" + todo_id);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === RESPONSE_DONE){
+            if(xhr.status === STATUS_OK){
+                addTodoElements(xhr.responseText);
+            }
+        }
+    };
+    var data = "todo_status="+encodeURI(TODO_STATUS_COMPLETED);
 
+    xhr.send(data);
+}
+
+function setTodoDeletedAJAX(todo_id){
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/api/todos/" + todo_id);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === RESPONSE_DONE){
+            if(xhr.status === STATUS_OK){
+                addTodoElements(xhr.responseText);
+            }
+        }
+    };
+    var data = "todo_status="+encodeURI(TODO_STATUS_DELETED);
+
+    xhr.send(data);
 }
