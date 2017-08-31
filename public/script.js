@@ -18,16 +18,19 @@ function addTodoElements(todos_data_json) {
     var active_todo_parent = document.getElementById(ACTIVE_TODO_LIST_ID);
     var completed_todo_parent = document.getElementById(COMPLETED_TODO_LIST_ID);
     var deleted_todo_parent = document.getElementById(DELETED_TODO_LIST_ID);
-    while(active_todo_parent.hasChildNodes()){
+
+    // Remove previous entries so that they do not duplicate on refresh
+    while (active_todo_parent.hasChildNodes()) {
         active_todo_parent.removeChild(active_todo_parent.lastChild);
     }
-    while(completed_todo_parent.hasChildNodes()){
+    while (completed_todo_parent.hasChildNodes()) {
         completed_todo_parent.removeChild(completed_todo_parent.lastChild);
     }
 
-    while(deleted_todo_parent.hasChildNodes()){
+    while (deleted_todo_parent.hasChildNodes()) {
         deleted_todo_parent.removeChild(deleted_todo_parent.lastChild);
     }
+
     for (todo_id in todos) {
         if (todos[todo_id].status === TODO_STATUS_ACTIVE) {
             active_todo_parent.appendChild(createActiveTodoElement(todo_id, todos[todo_id]));
@@ -42,10 +45,7 @@ function addTodoElements(todos_data_json) {
 function createActiveTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
-    var checkbox = document.createElement("input");
-    checkbox.setAttribute("type", "checkbox");
-    checkbox.setAttribute("onchange", "setTodoCompletedAJAX(" + todo_id + ")");
-    todo_element.appendChild(checkbox);
+    todo_element.appendChild(createCheckbox(todo_id));
     var todo_title = document.createTextNode(todo.title);
     todo_element.appendChild(todo_title);
     todo_element.appendChild(createDeleteX(todo_id));
@@ -72,9 +72,17 @@ function createDeletedTodoElement(todo_id, todo) {
     return todo_element;
 }
 
+function createCheckbox(todo_id) {
+    var checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("onchange", "setTodoCompletedAJAX(" + todo_id + ")");
+    return checkbox;
+}
+
 function createDeleteX(todo_id) {
     var delete_x = document.createElement("span");
     delete_x.innerText = "X";
+    delete_x.setAttribute("class", "text-danger");
     delete_x.setAttribute("onclick", "setTodoDeletedAJAX(" + todo_id + ")");
     return delete_x;
 }
@@ -122,13 +130,13 @@ function addTodoAJAX() {
     xhr.send(data);
 }
 
-function setTodoActiveAJAX(todo_id){
+function setTodoActiveAJAX(todo_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/" + todo_id);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState === RESPONSE_DONE){
-            if(xhr.status === STATUS_OK){
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === RESPONSE_DONE) {
+            if (xhr.status === STATUS_OK) {
                 addTodoElements(xhr.responseText);
             } else {
                 var resp = JSON.parse(xhr.responseText);
@@ -136,18 +144,18 @@ function setTodoActiveAJAX(todo_id){
             }
         }
     };
-    var data = "todo_status="+encodeURI(TODO_STATUS_ACTIVE);
+    var data = "todo_status=" + encodeURI(TODO_STATUS_ACTIVE);
 
     xhr.send(data);
 }
 
-function setTodoCompletedAJAX(todo_id){
+function setTodoCompletedAJAX(todo_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/" + todo_id);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState === RESPONSE_DONE){
-            if(xhr.status === STATUS_OK){
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === RESPONSE_DONE) {
+            if (xhr.status === STATUS_OK) {
                 addTodoElements(xhr.responseText);
             } else {
                 var resp = JSON.parse(xhr.responseText);
@@ -155,18 +163,18 @@ function setTodoCompletedAJAX(todo_id){
             }
         }
     };
-    var data = "todo_status="+encodeURI(TODO_STATUS_COMPLETED);
+    var data = "todo_status=" + encodeURI(TODO_STATUS_COMPLETED);
 
     xhr.send(data);
 }
 
-function setTodoDeletedAJAX(todo_id){
+function setTodoDeletedAJAX(todo_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/" + todo_id);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState === RESPONSE_DONE){
-            if(xhr.status === STATUS_OK){
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === RESPONSE_DONE) {
+            if (xhr.status === STATUS_OK) {
                 addTodoElements(xhr.responseText);
             } else {
                 var resp = JSON.parse(xhr.responseText);
@@ -174,7 +182,7 @@ function setTodoDeletedAJAX(todo_id){
             }
         }
     };
-    var data = "todo_status="+encodeURI(TODO_STATUS_DELETED);
+    var data = "todo_status=" + encodeURI(TODO_STATUS_DELETED);
 
     xhr.send(data);
 }

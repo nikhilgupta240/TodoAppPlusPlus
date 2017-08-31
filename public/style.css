@@ -1,0 +1,29 @@
+.heading {
+    text-align: center;
+    background-color: #ffff99;
+
+}
+
+.breathHorizontal{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.breathVertical{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+div.todoStatusACTIVE{
+    color: #0000ff;
+}
+
+div.todoStatusCOMPLETE{
+    color: #008000;
+    text-decoration: line-through;
+}
+
+div.todoStatusDELETED{
+    color: #ff0000;
+    text-decoration: line-through;
+}
