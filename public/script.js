@@ -24,25 +24,31 @@ function addTodoElements(todos_data_json) {
     while(completed_todo_parent.hasChildNodes()){
         completed_todo_parent.removeChild(completed_todo_parent.lastChild);
     }
+
+    while(deleted_todo_parent.hasChildNodes()){
+        deleted_todo_parent.removeChild(deleted_todo_parent.lastChild);
+    }
     for (todo_id in todos) {
         if (todos[todo_id].status === TODO_STATUS_ACTIVE) {
             active_todo_parent.appendChild(createActiveTodoElement(todo_id, todos[todo_id]));
         } else if (todos[todo_id].status === TODO_STATUS_COMPLETED) {
             completed_todo_parent.appendChild(createCompletedTodoElement(todo_id, todos[todo_id]));
         } else {
-            // deleted_todo_parent.appendChild(createDeletedTodoElement(todo_id, todos[todo_id]));
+            deleted_todo_parent.appendChild(createDeletedTodoElement(todo_id, todos[todo_id]));
         }
     }
 }
 
 function createActiveTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
+    todo_element.setAttribute("data-id", todo_id);
     var checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("onchange", "setTodoCompletedAJAX(" + todo_id + ")");
     todo_element.appendChild(checkbox);
     var todo_title = document.createTextNode(todo.title);
     todo_element.appendChild(todo_title);
+    todo_element.appendChild(createDeleteX(todo_id));
     return todo_element;
 }
 
@@ -51,16 +57,26 @@ function createCompletedTodoElement(todo_id, todo) {
     todo_element.setAttribute("data-id", todo_id);
     var checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
+    checkbox.checked = true;
     checkbox.setAttribute("onchange", "setTodoActiveAJAX(" + todo_id + ")");
     todo_element.appendChild(checkbox);
     var todo_title = document.createTextNode(todo.title);
     todo_element.appendChild(todo_title);
+    todo_element.appendChild(createDeleteX(todo_id));
     return todo_element;
 }
 
 function createDeletedTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
+    todo_element.innerText = todo.title;
     return todo_element;
+}
+
+function createDeleteX(todo_id) {
+    var delete_x = document.createElement("span");
+    delete_x.innerText = "X";
+    delete_x.setAttribute("onclick", "setTodoDeletedAJAX(" + todo_id + ")");
+    return delete_x;
 }
 
 //-----------------------------------------------------------------------------//
@@ -75,6 +91,9 @@ function getTodosAJAX() {
         if (xhr.readyState === RESPONSE_DONE) {
             if (xhr.status === STATUS_OK) {
                 addTodoElements(xhr.responseText);
+            } else {
+                var resp = JSON.parse(xhr.responseText);
+                alert(resp.error);
             }
         }
     };
@@ -83,7 +102,9 @@ function getTodosAJAX() {
 
 // Add a new todo
 function addTodoAJAX() {
-    var todo_title = document.getElementById(NEW_TODO_INPUT_ID).value;
+    var todo_input = document.getElementById(NEW_TODO_INPUT_ID);
+    var todo_title = todo_input.value;
+    todo_input.value = "";
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/todos", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -109,6 +130,9 @@ function setTodoActiveAJAX(todo_id){
         if(xhr.readyState === RESPONSE_DONE){
             if(xhr.status === STATUS_OK){
                 addTodoElements(xhr.responseText);
+            } else {
+                var resp = JSON.parse(xhr.responseText);
+                alert(resp.error);
             }
         }
     };
@@ -125,6 +149,9 @@ function setTodoCompletedAJAX(todo_id){
         if(xhr.readyState === RESPONSE_DONE){
             if(xhr.status === STATUS_OK){
                 addTodoElements(xhr.responseText);
+            } else {
+                var resp = JSON.parse(xhr.responseText);
+                alert(resp.error);
             }
         }
     };
@@ -141,6 +168,9 @@ function setTodoDeletedAJAX(todo_id){
         if(xhr.readyState === RESPONSE_DONE){
             if(xhr.status === STATUS_OK){
                 addTodoElements(xhr.responseText);
+            } else {
+                var resp = JSON.parse(xhr.responseText);
+                alert(resp.error);
             }
         }
     };
