@@ -12,6 +12,11 @@ const TODO_STATUS_DELETED = "DELETED";
 //----------------------------Utility functions--------------------------------//
 //-----------------------------------------------------------------------------//
 
+// Enables all tooltips
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
 // Add all todo elements to the web app
 function addTodoElements(todos_data_json) {
     var todos = JSON.parse(todos_data_json);
@@ -42,6 +47,8 @@ function addTodoElements(todos_data_json) {
     }
 }
 
+// Creates a div having a checkbox, todo title and delete button as its children and return the div
+// to be appended to active_parent
 function createActiveTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
@@ -51,6 +58,8 @@ function createActiveTodoElement(todo_id, todo) {
     return todo_element;
 }
 
+// Creates a div having a checkbox, todo title and delete button as its children and return the div
+// to be appended to completed_parent
 function createCompletedTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
@@ -60,6 +69,8 @@ function createCompletedTodoElement(todo_id, todo) {
     return todo_element;
 }
 
+// Creates a div having a todo title as its children and return the div
+// to be appended to deleted_parent
 function createDeletedTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
@@ -67,6 +78,7 @@ function createDeletedTodoElement(todo_id, todo) {
     return todo_element;
 }
 
+// Creates a checkbox for acitve and completed todos. If todo is completed checkbox is checked.
 function createCheckbox(todo_id, todo) {
     var checkbox_div = document.createElement("div");
     checkbox_div.setAttribute("class", "col-xs-2");
@@ -82,6 +94,7 @@ function createCheckbox(todo_id, todo) {
     return checkbox_div;
 }
 
+// creates an element with todo title and returns the element
 function createTitleElement(todo) {
     var todo_text = document.createElement("div");
     todo_text.setAttribute("class", "col-xs-8 todoStatus" + todo.status);
@@ -89,6 +102,7 @@ function createTitleElement(todo) {
     return todo_text;
 }
 
+// creates an element with delete button
 function createDeleteX(todo_id) {
     var delete_x_div = document.createElement("div");
     delete_x_div.setAttribute("class", "text-danger col-xs-2");
@@ -96,10 +110,14 @@ function createDeleteX(todo_id) {
     delete_x.setAttribute("class", "btn btn-link");
     delete_x.innerText = "X";
     delete_x.setAttribute("onclick", "setTodoDeletedAJAX(" + todo_id + ")");
+    delete_x.setAttribute("data-toggle", "tooltip");
+    delete_x.setAttribute("title", "Delete todo");
     delete_x_div.appendChild(delete_x);
     return delete_x_div;
 }
 
+// function to hide the list of completed todos from display
+// It toggle's the display of the completed_parent element
 function hideCompletedItems() {
     var complete_parent = document.getElementById(COMPLETED_TODO_LIST_ID);
     if (complete_parent.style.display === 'none') {
@@ -109,6 +127,8 @@ function hideCompletedItems() {
     }
 }
 
+// function to hide the list of deleted todos from display
+// It toggle's the display of the deleted_parent element
 function hideDeletedItems() {
     var parent = document.getElementById(DELETED_TODO_LIST_ID);
     if (parent.style.display === 'none') {
@@ -122,7 +142,7 @@ function hideDeletedItems() {
 //------------------------------AJAX REQUEST'S---------------------------------//
 //-----------------------------------------------------------------------------//
 
-// Get all the todos
+// Get all the todos from the server with GET request on /api/todos
 function getTodosAJAX() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/todos");
@@ -139,7 +159,8 @@ function getTodosAJAX() {
     xhr.send(data = null);
 }
 
-// Add a new todo
+// It adds a new todo to the database with POST request on api/todos and
+// todo_title conaining the title of the new todo
 function addTodoAJAX() {
     var todo_input = document.getElementById(NEW_TODO_INPUT_ID);
     var todo_title = todo_input.value;
@@ -161,6 +182,7 @@ function addTodoAJAX() {
     xhr.send(data);
 }
 
+// Set's the status of the todo with id = todo_id to be active using PUT request
 function setTodoActiveAJAX(todo_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/" + todo_id);
@@ -180,6 +202,7 @@ function setTodoActiveAJAX(todo_id) {
     xhr.send(data);
 }
 
+// Set's the status of the todo with id = todo_id to be completed using PUT request
 function setTodoCompletedAJAX(todo_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/" + todo_id);
@@ -199,6 +222,7 @@ function setTodoCompletedAJAX(todo_id) {
     xhr.send(data);
 }
 
+// Set's the status of the todo with id = todo_id to be deleted using PUT request
 function setTodoDeletedAJAX(todo_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/api/todos/" + todo_id);
