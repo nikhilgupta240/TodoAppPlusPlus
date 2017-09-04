@@ -52,6 +52,7 @@ function addTodoElements(todos_data_json) {
 function createActiveTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
+    todo_element.setAttribute("class", "row");
     todo_element.appendChild(createCheckbox(todo_id, todo));
     todo_element.appendChild(createTitleElement(todo));
     todo_element.appendChild(createDeleteX(todo_id));
@@ -63,6 +64,7 @@ function createActiveTodoElement(todo_id, todo) {
 function createCompletedTodoElement(todo_id, todo) {
     var todo_element = document.createElement("div");
     todo_element.setAttribute("data-id", todo_id);
+    todo_element.setAttribute("class", "row");
     todo_element.appendChild(createCheckbox(todo_id, todo));
     todo_element.appendChild(createTitleElement(todo));
     todo_element.appendChild(createDeleteX(todo_id));
@@ -108,7 +110,7 @@ function createDeleteX(todo_id) {
     delete_x_div.setAttribute("class", "text-danger col-xs-2");
     var delete_x = document.createElement("button");
     delete_x.setAttribute("class", "btn btn-link");
-    delete_x.innerText = "X";
+    delete_x.innerHTML = "<sup>X</sup>";
     delete_x.setAttribute("onclick", "setTodoDeletedAJAX(" + todo_id + ")");
     delete_x.setAttribute("data-toggle", "tooltip");
     delete_x.setAttribute("title", "Delete todo");

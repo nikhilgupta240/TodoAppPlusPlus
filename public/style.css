@@ -3,6 +3,14 @@
     background-color: #ffff99;
 }
 
+h3 {
+    opacity: 0.5;
+}
+
+sup {
+    color: red;
+}
+
 .breathTop {
     margin-top: 50px;
 }
@@ -34,4 +42,12 @@ div.todoStatusCOMPLETED {
 div.todoStatusDELETED {
     color: #ff0000;
     text-decoration: line-through;
+}
+
+input[type="text"] {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid cornflowerblue;
+    opacity: 9;
 }
