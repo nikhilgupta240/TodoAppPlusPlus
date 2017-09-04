@@ -12,5 +12,4 @@ dummy todo's in each section.
 * UI as shown in mockup.
 
 ## Features not built
-* Checkbox UI
 * Different UI for Add todo section
