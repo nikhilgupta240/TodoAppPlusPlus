@@ -87,12 +87,18 @@ function createCheckbox(todo_id, todo) {
     checkbox_div.setAttribute("align", "right");
     var checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("class", "css-checkbox");
+    checkbox.setAttribute("id", "checkbox" + todo_id);
     checkbox.setAttribute("onchange", "setTodoCompletedAJAX(" + todo_id + ")");
     if (todo.status === TODO_STATUS_COMPLETED) {
         checkbox.checked = true;
         checkbox.setAttribute("onchange", "setTodoActiveAJAX(" + todo_id + ")");
     }
     checkbox_div.appendChild(checkbox);
+    var label = document.createElement("label");
+    label.setAttribute("for", "checkbox"+todo_id);
+    label.setAttribute("class", "css-label");
+    checkbox_div.appendChild(label);
     return checkbox_div;
 }
 
