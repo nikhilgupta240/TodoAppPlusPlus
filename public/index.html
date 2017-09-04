@@ -38,10 +38,12 @@
         <div class="col-xs-2"></div>
         <div id="add_todo_div" class="col-xs-8">
             <h3>Add Todo</h3>
-            <div class="col-xs-4 breathVertical">
-                <input id="new_todo_input" type="text" placeholder="Todo Title Goes Here" class="form-control">
+            <div class="col-xs-6 w3-container">
+                <input id="new_todo_input" type="text" placeholder="Todo Title Goes Here" class="w3-input">
+                <div class="btn-group">
+                    <button class="btn-xs" onclick="addTodoAJAX()">ADD</button>
+                </div>
             </div>
-            <input type="button" value="ADD" class="btn btn-info" onclick="addTodoAJAX()">
         </div>
     </div>
 

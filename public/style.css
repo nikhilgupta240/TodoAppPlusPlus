@@ -48,7 +48,7 @@ input[type="text"] {
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 1px solid cornflowerblue;
+    border-bottom: 1px solid grey;
     opacity: 9;
 }
 
@@ -90,4 +90,14 @@ label.css-label {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.btn-group button {
+    background-color: #81c0ff;
+    border: #44b3ff;
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+    float: left;
+    margin-bottom: 5px;
 }
